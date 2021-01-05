@@ -1,16 +1,27 @@
-# This is a sample Python script.
+from datetime import datetime
+from pathlib import Path
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import os
+import instaloader
 
+L = instaloader.Instaloader()
+user = input("Please enter your username: \n")
+password = input("Please enter your password: \n")
+page = input("Please enter the page you want to scrap for posts: \n")
+L.login(user, password)
+posts = instaloader.Profile.from_username(L.context, page).get_posts()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+print("posts gotten")
+SINCE = datetime(2021, 1, 5)
+UNTIL = datetime(2021, 1, 6)
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+count = 1
+for post in posts:
+    if post.date >= SINCE:
+        if post.date <= UNTIL:
+            print(post.date)
+            # path = os.path.join("f.a.online", str(count))
+            os.makedirs("f.a.online/{}".format(count))
+            path = Path("f.a.online/{}".format(count))
+            L.download_post(post, path)
+            count += 1
