@@ -1,3 +1,5 @@
 .idea/
 venv/
 pass.txt
+geckodriver.exe
+geckodriver.log
