@@ -1,0 +1,182 @@
+import os
+
+
+def txt_to_labels(la):
+    desc = {}
+    if len(la) == 4:
+        desc["title"] = la[0] + " " + la[1]
+        desc["sizes"] = la[2]
+        desc["price"] = la[3]
+    elif len(la) == 3:
+        desc["title"] = la[0]
+        desc["sizes"] = la[1]
+        desc["price"] = la[2]
+    else:
+        print("File {} in {} has more or less words than expected".format(file, folder))
+        print("please provide the details yourself here: \n")
+        desc["title"] = input("Title(description): ")
+        desc["sizes"] = input("Sizes: ")
+        desc["price"] = input("Price: ")
+
+    return desc
+
+
+def get_confirmation():
+    confirmation = input("Type 'y' or 'n': ").lower()
+    if confirmation == "y":
+        return True
+    elif confirmation == "n":
+        return False
+    else:
+        print("You typed '{}' which is not 'y' or 'n'.")
+        print("Please type 'y' or 'n' only.")
+        get_confirmation()
+
+
+def labels_to_dic(a):
+    details = None
+    if not a[0][0].isdigit() and a[0].lower() != "one" and "." not in a[0] and a[0].lower() != "xl":
+        details = txt_to_labels(a)
+
+    elif a[0][0].isdigit():
+        print("File {} in {} starts with a number.".format(file, folder))
+        print("this can be a size or a price instead of description.")
+        print("You can choose to continue if you think that is appropriate.")
+        print("Here take a look: \n")
+        print(a)
+        print("\n")
+        print("Type 'y' to continue or 'n' to enter the details yourself.")
+        answer = get_confirmation()
+        if answer:
+            details = txt_to_labels(a)
+        elif not answer:
+            print("Please provide the details yourself here: \n")
+            a = []
+            title = input("Title(description): ")
+            a.append(title)
+            sizes = input("Sizes: ")
+            a.append(sizes)
+            price = input("Price: ")
+            a.append(price)
+            details = labels_to_dic(a)
+
+    elif a[0].lower() == "one":
+        print("File {} in {} starts with the word 'one'".format(file, folder))
+        print("this can be a size or a price instead of description")
+        print("You can choose to continue if you think that is appropriate.")
+        print("Here take a look: \n")
+        print(a)
+        print("\n")
+        print("Type 'y' to continue or 'n' to enter the details yourself.")
+        answer = get_confirmation()
+        if answer:
+            details = txt_to_labels(a)
+
+        elif not answer:
+            print("Please provide the details yourself here: \n")
+            a = []
+            title = input("Title(description): ")
+            a.append(title)
+            sizes = input("Sizes: ")
+            a.append(sizes)
+            price = input("Price: ")
+            a.append(price)
+            details = labels_to_dic(a)
+
+    elif "." in a[0]:
+        print("File {} in {} starts with a word that has a '.' in it".format(file, folder))
+        print("this can be a size or a price instead of description")
+        print("You can choose to continue if you think that is appropriate.")
+        print("Here take a look: \n")
+        print(a)
+        print("\n")
+        print("Type 'y' to continue or 'n' to enter the details yourself.")
+        answer = get_confirmation()
+        if answer:
+            details = txt_to_labels(a)
+        elif not answer:
+            print("Please provide the details yourself here: \n")
+            a = []
+            title = input("Title(description): ")
+            a.append(title)
+            sizes = input("Sizes: ")
+            a.append(sizes)
+            price = input("Price: ")
+            a.append(price)
+            details = labels_to_dic(a)
+
+    elif a[0].lower() == "one":
+        print("File {} in {} starts with the word 'one'".format(file, folder))
+        print("this can be a size or a price instead of description")
+        print("You can choose to continue if you think that is appropriate.")
+        print("Here take a look: \n")
+        print(a)
+        print("\n")
+        print("Type 'y' to continue or 'n' to enter the details yourself.")
+        answer = get_confirmation()
+        if answer:
+            details = txt_to_labels(a)
+
+        elif not answer:
+            print("Please provide the details yourself here: \n")
+            a = []
+            title = input("Title(description): ")
+            a.append(title)
+            sizes = input("Sizes: ")
+            a.append(sizes)
+            price = input("Price: ")
+            a.append(price)
+            details = labels_to_dic(a)
+
+    return details
+
+
+if __name__ == "__main__":
+
+    dire = "f.a.online"
+
+    if os.path.exists(dire):
+        main = os.listdir(dire)
+        if not main:
+            raise Exception("{} is empty".format(dire))
+        for item in main:
+            if os.path.isdir(item):
+                folder = os.listdir(item)
+                if not folder:
+                    raise Exception("Folder {} is empty".format(folder))
+
+                for obj in folder:
+                    txt_files = []
+                    descriptions = []
+                    if os.path.isfile(obj):
+                        file = obj
+                        if file.endswith(".txt"):
+                            txt_files.append(file)
+                            with open(file) as f:
+                                info = f.readlines()
+                                if len(info) == 1:
+                                    for line in info:
+                                        labels = line.split()
+                                        description = labels_to_dic(labels)
+                                elif len(info) != 1:
+                                    print("File {} in {} has more than 1 line".format(file, folder))
+                                    print("please provide the details yourself here: \n")
+                                    descr = input("Title(description): ")
+                                    descriptions.append(descr)
+                                    size = input("Sizes: ")
+                                    descriptions.append(size)
+                                    prices = input("Price: ")
+                                    descriptions.append(prices)
+
+                    if not txt_files:
+                        print("folder {} has no text file".format(folder))
+                        print("please provide the details yourself here: \n")
+                        descre = input("Title(description): ")
+                        descriptions.append(descre)
+                        siz = input("Sizes: ")
+                        descriptions.append(siz)
+                        pric = input("Price: ")
+                        descriptions.append(pric)
+    
+    elif not os.path.exists(dire):
+        raise FileNotFoundError("{} does not exist".format(dire))

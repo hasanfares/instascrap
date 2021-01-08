@@ -34,7 +34,7 @@ time.sleep(15)
 
 # iframe = driver.find_element_by_id("#csr")
 # driver.switch_to.frame(iframe)
-my_stores = driver.find_element_by_xpath("/html/body/div[2]/header/div/div/div[1]/div[5]/div/nav/ul/li[3]/a")
+# my_stores = driver.find_element_by_xpath("/html/body/div[2]/header/div/div/div[1]/div[5]/div/nav/ul/li[3]/a")
 product_tab = driver.find_element_by_xpath("/html/body/div[2]/header/div/div/div[1]/div[5]/div/nav/ul/li[2]/a").click()
 # hover = ActionChains(driver).move_to_element(my_stores)
 # hover.perform()
