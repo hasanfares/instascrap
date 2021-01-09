@@ -19,8 +19,8 @@ print("posts gotten")
 # end_date_year = int(input("Please enter the year you want your posts to end at: \n"))
 # end_date_month = int(input("Please enter the month you want your posts to end at: \n"))
 # end_date_day = int(input("Please enter the day you want your posts to end at: \n"))
-SINCE = datetime(2021, 1, 6)
-UNTIL = datetime(2021, 1, 7)
+SINCE = datetime(2021, 1, 8)
+UNTIL = datetime(2021, 1, 9)
 os.makedirs("f.a.online")
 count = 1
 for post in posts:
